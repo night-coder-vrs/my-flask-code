@@ -1,0 +1,9 @@
+@font-face {
+    font-family: SF_Pro_Display;
+    src: url("../css/SF-Pro-Display-Semibold.otf");
+}
+
+* {
+    font-family: SF_Pro_Display;
+}
+
