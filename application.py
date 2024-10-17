@@ -12,14 +12,14 @@ def index():
 
 
 
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 
 def login():
     form = LoginForm()
     return render_template("login.html", 
                            form=form)
 
-@app.route("/signup")
+@app.route("/signup", methods=["GET", "POST"])
 
 def signup():
     form = SignupForm()
