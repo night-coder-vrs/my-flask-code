@@ -1,7 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-    
-
+    <div class="custome-container">
+        <div class="glass-container">
+            <h2>Login</h2>
+            <form class="custome-form" method="POST" action="{{ url_for('login') }}">
+                {{ form.hidden_tag() }}
+                {{ form.username(class="form-control", placeholder="Username") }}
+                {{ form.password(class="form-control", placeholder="Password") }}
+                {{ form.submit(class="btn btn-primary") }}
+                <!-- <button type="submit" class="btn btn-primary">Login</button> -->
+                <p>Don't have an account? <a class="auth" href="{{ url_for('signup') }}">Signup</a></p>
+            </form>
+        </div>
+    </div>
 {% endblock %}
