@@ -1,30 +1,77 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, ValidationError, TextAreaField
+from wtforms import StringField, SubmitField, PasswordField, EmailField, ValidationError, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, EqualTo, Length, Email
+from models import User
+
 from wtforms.widgets import TextArea
-# from flask_ckeditor import CKEditorField
 from flask_wtf.file import FileField
 
 # Create A Search Form
 class SearchForm(FlaskForm):
-	searched = StringField("Searched", validators=[DataRequired()])
-	submit = SubmitField("Submit")
-
+    searched = StringField("Searched", validators=[DataRequired()])
+    submit = SubmitField("Submit")
 
 # Create Login Form
 class LoginForm(FlaskForm):
-	username = StringField("Username", validators=[DataRequired()])
-	password = PasswordField("Password", validators=[DataRequired()])
-	submit = SubmitField("Submit")
- 
+    username = StringField("Username", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired(), Length(min=4)])
+    submit = SubmitField("Submit")
+  
 # Create Signup Form
 class SignupForm(FlaskForm):
-	username = StringField("Username", validators=[DataRequired()])
-	password = PasswordField("Password", validators=[DataRequired()])
-	con_password = PasswordField("Password", validators=[DataRequired()])
-	email = EmailField("Email", validators=[DataRequired(), Email()])
-	submit = SubmitField("Submit")
+    username = StringField("Username", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired(), Length(min=4)])
+    con_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo('password')])
+    email = EmailField("Email", validators=[DataRequired(), Email()])
+    submit = SubmitField("Submit")
 
+    # Function to check if email already exists (optional for confirmation email)
+    def validate_email(self):
+        user = User.query.filter_by(email=self.email.data).first()
+        if user is not None:
+            raise ValidationError("Email already exists!")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# from flask_wtf import FlaskForm
+# from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, ValidationError, TextAreaField
+# from wtforms.validators import DataRequired, EqualTo, Length, Email
+# from wtforms.widgets import TextArea
+# from flask_wtf.file import FileField
+# # from flask_ckeditor import CKEditorField
+
+# # Create A Search Form
+# class SearchForm(FlaskForm):
+# 	searched = StringField("Searched", validators=[DataRequired()])
+# 	submit = SubmitField("Submit")
+
+
+# # Create Login Form
+# class LoginForm(FlaskForm):
+# 	username = StringField("Username", validators=[DataRequired()])
+# 	password = PasswordField("Password", validators=[DataRequired(), Length(min=4)])
+# 	submit = SubmitField("Submit")
+ 
+# # Create Signup Form
+# class SignupForm(FlaskForm):
+# 	username = StringField("Username", validators=[DataRequired()])
+# 	password = PasswordField("Password", validators=[DataRequired(), Length(min=4)])
+# 	con_password = PasswordField("Password", validators=[DataRequired(), Length(min=4)])
+# 	email = EmailField("Email", validators=[DataRequired(), Email()])
+# 	submit = SubmitField("Submit")
 
 # Create a Posts Form
 # class PostForm(FlaskForm):
